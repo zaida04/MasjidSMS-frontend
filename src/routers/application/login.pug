@@ -1,0 +1,9 @@
+include ../includes/top.pug
+include ../includes/header.pug
+.w3-container(style="width:50%; margin-left: auto; margin-right: auto;")
+  form(method="POST")
+    .w3-container
+      p.w3-xxlarge Sign In:
+    input.w3-input(type='text' name='email' placeholder='email' required='')
+    input.w3-input(type='password' name='password' placeholder='Password' required='')
+    input.w3-black.w3-button.w3-btn(style="width:100%" type='submit' value='Login')

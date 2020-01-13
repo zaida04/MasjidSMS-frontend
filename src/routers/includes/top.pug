@@ -1,0 +1,14 @@
+
+center
+  div.w3-container.w3-black
+    b
+      a(href='/')
+        p.w3-xxxlarge SMS Application
+      a(href='https://github.com/zaida04/Masjid-AnNoor-Timing-API')
+        button.w3-black.w3-hover-grey(onclick="document.style.display='block'" style='width:auto;') Github
+      a(href='/backend')
+        button.w3-black.w3-hover-grey(onclick="document.style.display='block'" style='width:auto;') Admin Panel
+      a(href='/')
+        button.w3-black.w3-hover-grey(onclick="document.style.display='block'" style='width:auto;') Home Page
+      if(user) 
+        button.w3-text-red.w3-black.w3-hover-grey(style='width:auto;') Hello #{user.firstname} #{user.lastname}!

@@ -1,0 +1,182 @@
+include ../includes/top.pug
+include ../includes/header.pug
+script(src='/main.js' type="text/javascript")
+script(src='https://www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit')
+style.
+    .dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    }
+    .dropbtn:hover, .dropbtn:focus {
+    outline: none;
+    }
+    .dropdown {
+    position: relative;
+    display: inline-block;
+    }
+    .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    }
+    .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    }
+    .dropdown a:hover {background-color: #ddd;}
+    .show {display: block;}
+    .w3-aquatic {
+       background-color: #3498DB;
+    }
+    #ovl {
+       position: fixed; /* Sit on top of the page content */
+       display: none; /* Hidden by default */
+       width: 100%; /* Full width (cover the whole page) */
+       height: 100%; /* Full height (cover the whole page) */
+       top: 0;
+       left: 0;
+       right: 0;
+       bottom: 0;
+       background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+       z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+       cursor: pointer; /* Add a pointer on hover */
+     }
+     #ocdm {
+       display: none;
+     }
+     #app { visibility:hidden; }
+     #loading {
+     border: 16px solid #f3f3f3;
+     border-radius: 50%;
+     border-top: 16px solid blue;
+     border-bottom: 16px solid blue;
+     width: 120px;
+     height: 120px;
+     -webkit-animation: spin 2s linear infinite;
+     animation: spin 2s linear infinite;
+     }
+     @-webkit-keyframes spin {
+     0% { -webkit-transform: rotate(0deg); }
+     100% { -webkit-transform: rotate(360deg); }
+     }
+     @keyframes spin {
+     0% { transform: rotate(0deg); }
+     100% { transform: rotate(360deg); }
+     }
+#err.w3-panel.w3-red
+  h2 Error! 
+  p Unsuccessfully sent text to SMSList. Error: 
+#succ.w3-panel.w3-green
+  h2 Success! 
+  p  
+script. 
+  var back1 = "#{url}"
+  var tok = "#{user.token}"
+  $(document).ready(function(){
+  $("#succ").hide();
+  $("#err").hide();
+  })
+#loading.w3-display-middle.w3-white
+#app
+  #ovl
+    #ocdm.w3-white(style="position:fixed; left:50%; top:50%; z-index: 3")
+      h2 iuhfsd
+  #ye.w3-row.w3-padding-64(style="margin-left: 5%")
+    #stcont.w3-container.w3-third
+      .w3-round-xxlarge.w3-card.w3-white.w3-section.w3-row.w3-row-padding.w3-padding-16(style="height: 70%; position: relative")
+        h2.w3-large(style="position:relative; top: 0%;") Send SMS to SMSList Shortcut
+        form#st
+          .dropdown
+            select#demo1.w3-select.w3-round-xxlarge.dropbtn(onpageshow='loopfunc()' name="list" style="position: relative;" onchange="changeur1(this)" required='true') SMSLists
+              option(disabled hidden selected) SMSList
+          br 
+          br
+          textarea.w3-input.w3-border(name='message' form='st' required style="position: relative; resize:none; height: 45%;") Enter text here to send to the SMSList...
+          input(type='hidden' name="token" value=user.token)
+          br
+          div#captcha1(style="transform:scale(0.77);-webkit-transform:scale(0.85);transform-origin:0 0;-webkit-transform-origin:0 0;")
+          button#sendst.w3-text-white.w3-btn.w3-button.w3-aquatic.w3-round-xxlarge.w3-padding-16(type='button' style="position: absolute; bottom: 0%; width: 95%")
+            b Send Text
+    #uslst.w3-container.w3-quarter
+      .w3-round-xxlarge.w3-card.w3-white.w3-section.w3-row.w3-row-padding.w3-padding-16(style="height: 35%;position: relative")
+        center
+          h2.w3-xlarge(style="position:relative") Shortlink to SMS list of users
+          select#usl2.w3-select.w3-round-xxlarge.dropbtn(onpageshow='loopfunc()' name="list" style="position: relative;" onchange="changeur3(this)" required='true') SMSLists
+            option(disabled hidden selected) choose SMSList
+          button#usl3.w3-text-white.w3-btn.w3-button.w3-aquatic.w3-round-xxlarge.w3-padding-16(type='button' style="position: relative; top: 0%; width: 95%") Go to Page
+    #createad.w3-container.w3-third
+      .w3-round-xxlarge.w3-card.w3-white.w3-section.w3-row.w3-row-padding.w3-padding-16(style="height: 85%;position: relative")
+        center
+          h2.w3-xlarge(style="position:relative;") Create an admin/mod
+        form#ca.w3-margin
+          label Firstname
+          input.w3-input(name="firstname" type="text" required='true')
+          label Lastname
+          input.w3-input(name="lastname" type="text" required='true')
+          label Email
+          input.w3-input(name="email" type="text" required='true')
+          label Phone Number
+          input.w3-input(name="pnumber" type="text" required='true')
+          input(type='hidden' name="token" value=user.token)
+          label Mod or Admin
+          select.w3-input.w3-border(name="status" onchange="fos(this)" required='true')  Mod or Admin
+            option(disabled hidden selected) Select permission level
+            option(value="Admin") Admin
+            option(value="Mod") Mod
+          br
+          div#captcha2(style="transform:scale(0.77);-webkit-transform:scale(0.85);transform-origin:0 0;-webkit-transform-origin:0 0;")
+          button.w3-aquatic.w3-round-xxlarge(type="submit") Create
+    #sgnup.w3-container.w3-third
+      .w3-round-xxlarge.w3-card.w3-white.w3-section.w3-row.w3-row-padding.w3-padding-16(style="height: 85%;position: relative")
+        form#demofm.w3-margin(method="POST")
+          center     
+            h2 
+              | Manually add user to SMSList
+            h3 choose smslist:
+            select#demosn.w3-select.w3-round-xxlarge.dropbtn(onpageshow='loopfunc()' name="list" style="position: relative;" onchange="changeur2(this)" required) SMSLists
+              option(disabled hidden selected) SMSList    
+            label.w3-large
+              | Firstname:
+            br
+            input.w3-input.w3-border(name='firstname' required='true')
+            label.w3-large
+              | Lastname:
+            br
+            input.w3-input.w3-border(name='lastname' required='true')
+            label.w3-large
+              | Email:
+            br
+            input.w3-input.w3-border(name='email' required='true')
+            label.w3-large
+              | Phone Number:
+            br
+            input.w3-input.w3-border(name='pnumber' required='true')
+            br
+            div#captcha3(style="transform:scale(0.77);-webkit-transform:scale(0.85);transform-origin:0 0;-webkit-transform-origin:0 0;")
+            button#sendusn.w3-btn.w3-button.w3-blue.w3-round-xxlarge.w3-large(type="button" style='width: 100%') 
+              | Signup
+    #slc.w3-container.w3-third
+      .w3-round-xxlarge.w3-card.w3-white.w3-section.w3-row.w3-row-padding.w3-padding-16(style="height: 45%;position: relative")
+        form#slc1.w3-margin(method="POST")
+          center     
+            h2 
+              | Create an SMSList
+            label.w3-large
+              | Name of list:
+            br
+            input(type='hidden' name="token" value=user.token)
+            input.w3-input.w3-border(name='tablename' required='true')
+            br
+            div#captcha4(style="transform:scale(0.77);-webkit-transform:scale(0.85);transform-origin:0 0;-webkit-transform-origin:0 0;")
+            button#slc2.w3-btn.w3-button.w3-blue.w3-round-xxlarge.w3-large(type="button" style='width: 100%') 
+              | Signup

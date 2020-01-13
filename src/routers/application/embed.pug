@@ -1,0 +1,25 @@
+link(rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css')
+.w3-white.w3-container.w3-border(style='position: relative; top: 0px; left: 0px; width: 300px; height: 500px')
+  form(method="POST" action=url + "/api/sms/smslist/" + name + "/add")
+    center
+      h2 
+        | Signup for the #{name} SMSList
+      label.w3-large
+        | Firstname:
+      br
+      input.w3-input.w3-border(name='firstname' required='')
+      label.w3-large
+        | Lastname:
+      br
+      input.w3-input.w3-border(name='lastname' required='')
+      label.w3-large
+        | Email:
+      br
+      input.w3-input.w3-border(name='email' required='')
+      label.w3-large
+        | Phone Number:
+      br
+      input.w3-input.w3-border(name='pnumber' required='')
+      br
+      button.w3-btn.w3-button.w3-blue.w3-round-xxlarge.w3-large(style='width: 100%') 
+        | Signup
